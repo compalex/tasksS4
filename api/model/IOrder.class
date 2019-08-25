@@ -1,0 +1,10 @@
+package api.model;
+
+import java.util.Date;
+
+public interface IOrder {
+
+    Date getOrderDate();
+    double getPrice();
+    String getStatus();
+}

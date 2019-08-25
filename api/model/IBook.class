@@ -1,0 +1,11 @@
+package api.model;
+
+import java.util.Date;
+
+public interface IBook {
+   
+    public int getId();
+    public String getTitle();
+    public Date getPublicationDate();
+    public double getPrice();
+}
