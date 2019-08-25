@@ -1,0 +1,32 @@
+package api;
+
+import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.Properties;
+
+import dao.BookDAO;
+import dao.OrderDAO;
+
+public class JDBCInstaller {
+    private Connection connection;
+    
+    public JDBCInstaller() throws Exception{
+        Properties props = new Properties();
+        props.load(new FileInputStream("db.properties"));
+        
+        String dbUrl = props.getProperty("dbUrl");
+        String userName = props.getProperty("userName");
+        String password = props.getProperty("password");
+        connection = DriverManager.getConnection(dbUrl, userName, password);
+        System.out.println("Connection established to " + dbUrl);
+    }
+    
+    public BookDAO createBookDAO() {
+        return new BookDAO(connection);
+    }
+
+    public OrderDAO createOrderDAO() {
+        return new OrderDAO(connection);
+    }
+}

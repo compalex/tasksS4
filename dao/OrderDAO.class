@@ -1,0 +1,77 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import model.Order;
+
+public class OrderDAO implements IOrderDAO {
+    private Connection connection;
+    
+    public OrderDAO(Connection connection) {
+        this.connection = connection;
+    }
+    
+    @Override
+    public List<Order> getAllOrders() {
+        return null;
+    }
+
+    @Override
+    public List<Order> getCompletedOrdersOverTime(Date dateFrom, Date dateTo) {
+        return null;
+    }
+
+    @Override
+    public double getAmountOfFundsOverTime(Date dateFrom, Date dateTo) {
+        return 0;
+    }
+
+    @Override
+    public int getNumOfCompletedOrdersOverTime(Date dateFrom, Date dateTo) {
+        return 0;
+    }
+
+    @Override
+    public Order getOrderDetails() {
+        return null;
+    }
+
+    @Override
+    public void addOrder(Order order) {
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate("INSERT INTO `orders` (`date`, `price`, `status`) VALUES ('"
+                    + new SimpleDateFormat("yyyy/MM/dd").format(order.getOrderDate())
+                    + "', "
+                    + order.getPrice() 
+                    + ", '"
+                    + order.getStatus()
+                    +"')");   
+        } catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                statement.close();
+                //am I supposed to close connection at all?
+                connection.close();
+            } catch(SQLException ex) {
+                System.err.print("Couldn't close DB connection");
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void completeOrder(Order order) {    
+    }
+
+    @Override
+    public void cancelOrder(Order book) {        
+    }
+}

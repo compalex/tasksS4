@@ -1,0 +1,17 @@
+package dao;
+
+import java.util.Date;
+import java.util.List;
+
+import model.Order;
+
+public interface IOrderDAO {
+    public List<Order> getAllOrders();
+    public List<Order> getCompletedOrdersOverTime(Date dateFrom, Date dateTo);
+    public double getAmountOfFundsOverTime(Date dateFrom, Date dateTo);
+    public int getNumOfCompletedOrdersOverTime(Date dateFrom, Date dateTo);
+    public Order getOrderDetails(); //?
+    public void addOrder(Order order);
+    public void completeOrder(Order order);
+    public void cancelOrder(Order book);
+}

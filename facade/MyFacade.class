@@ -1,0 +1,13 @@
+package facade;
+
+import service.BookService;
+import service.OrderService;
+
+public class MyFacade {
+    public static void main(String[] args) {
+        //If a client sends a requests to show bookList, the server does this method
+        new BookService().getAllBooks();
+        //...or this method if the client wants to make an order for 55.50$
+        new OrderService().addOrder(55.50);
+    }
+}

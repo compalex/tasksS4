@@ -1,0 +1,12 @@
+package dao;
+
+import java.util.List;
+import model.Book;
+
+public interface IBookDAO {
+    public List<Book> getAllBooks();
+    public List<Book> getStaleBooks();
+    public Book getBookDescriprion(); //?
+    public void addBookToStock(Book book);
+    public void removeBookFromStock(Book book);
+}
