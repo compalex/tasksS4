@@ -1,0 +1,16 @@
+package api.facade;
+
+import java.util.List;
+import api.model.IBook;
+import api.model.IOrder;
+import api.model.IRequest;
+import utility.BookSort;
+import utility.OrderSort;
+import utility.RequestSort;
+
+public interface ILibraryFacade {
+    
+    List<IBook> getAllBooks(BookSort sort);
+    List<IOrder> getAllOrders(OrderSort sort);
+    List<IRequest> getAllRequests(RequestSort sort);
+}
