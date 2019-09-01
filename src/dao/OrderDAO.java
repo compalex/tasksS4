@@ -1,13 +1,21 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import api.dao.IOrderDAO;
+import api.model.IModel;
+import api.model.IOrder;
 import model.Order;
+import utility.Converter;
+import utility.OrderSort;
+import utility.SQLs;
 
 public class OrderDAO implements IOrderDAO {
     private Connection connection;
@@ -15,14 +23,33 @@ public class OrderDAO implements IOrderDAO {
     public OrderDAO(Connection connection) {
         this.connection = connection;
     }
-    
+
     @Override
-    public List<Order> getAllOrders() {
-        return null;
+    public List<IModel> getAllOrders(OrderSort sort) {
+        Statement statement = null;
+        ResultSet resultSet = null;
+        Class<Order> classType = Order.class;
+
+        try {
+            String sql = SQLs.getAllOrdersSQL(sort);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            return Converter.getListFromResultSet(classType, resultSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return new ArrayList<IModel>();
+        } finally {
+            try {
+                statement.close();
+                resultSet.close();
+            } catch (SQLException ex) {
+            ex.printStackTrace();
+            }
+        }
     }
 
     @Override
-    public List<Order> getCompletedOrdersOverTime(Date dateFrom, Date dateTo) {
+    public List<IOrder> getCompletedOrdersOverTime(Date dateFrom, Date dateTo) {
         return null;
     }
 
@@ -37,12 +64,12 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public Order getOrderDetails() {
+    public IOrder getOrderDetails() {
         return null;
     }
 
     @Override
-    public void addOrder(Order order) {
+    public void addOrder(IOrder order) {
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -68,10 +95,10 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public void completeOrder(Order order) {    
+    public void completeOrder(IOrder order) {    
     }
 
     @Override
-    public void cancelOrder(Order book) {        
+    public void cancelOrder(IOrder book) {        
     }
 }
