@@ -6,12 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import api.dao.IRequestDAO;
 import api.model.IModel;
 import model.Request;
+import utility.Constants;
 import utility.Converter;
-import utility.RequestSort;
 import utility.SQLs;
 
 public class RequestDAO implements IRequestDAO {
@@ -22,7 +21,7 @@ public class RequestDAO implements IRequestDAO {
     }
     
     @Override
-    public List<IModel> getAllRequests(RequestSort sort) {
+    public List<IModel> getAllRequests(Constants.RequestSort sort) {
         Statement statement = null;
         ResultSet resultSet = null;
         // could be Class<?> or <? extends parentClass>

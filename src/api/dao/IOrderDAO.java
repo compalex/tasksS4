@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.List;
 import api.model.IModel;
 import api.model.IOrder;
-import utility.OrderSort;
+import utility.Constants;
 
 public interface IOrderDAO {
-    public List<IModel> getAllOrders(OrderSort sort);
+    public List<IModel> getAllOrders(Constants.OrderSort sort);
     public List<IOrder> getCompletedOrdersOverTime(Date dateFrom, Date dateTo);
     public double getAmountOfFundsOverTime(Date dateFrom, Date dateTo);
     public int getNumOfCompletedOrdersOverTime(Date dateFrom, Date dateTo);

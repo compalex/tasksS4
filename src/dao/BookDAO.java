@@ -6,12 +6,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import api.dao.IBookDAO;
 import api.model.IBook;
 import api.model.IModel;
 import model.Book;
-import utility.BookSort;
+import utility.Constants;
 import utility.Converter;
 import utility.SQLs;
 
@@ -23,7 +22,7 @@ public class BookDAO implements IBookDAO {
     }
 
     @Override
-    public List<IModel> getAllBooks(BookSort sort) {
+    public List<IModel> getAllBooks(Constants.BookSort sort) {
         Statement statement = null;
         ResultSet resultSet = null;
         // could be Class<?> or <? extends parentClass>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import api.Columns;
+import api.annotations.Columns;
 import api.model.IModel;
 
 import java.lang.reflect.Field;

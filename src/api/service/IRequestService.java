@@ -2,9 +2,9 @@ package api.service;
 
 import java.util.List;
 import api.model.IRequest;
-import utility.RequestSort;
+import utility.Constants;
 
 public interface IRequestService {
 
-    List<IRequest> getAllRequests(RequestSort sort);
+    List<IRequest> getAllRequests(Constants.RequestSort sort);
 }

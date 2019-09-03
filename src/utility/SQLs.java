@@ -2,7 +2,7 @@ package utility;
 
 public class SQLs {
 
-    public static String getAllBooksSQL(BookSort sort) {
+    public static String getAllBooksSQL(Constants.BookSort sort) {
         String firstPart = "SELECT books.book_id, books.title, books.publication_date, "
                 + "books.price, COUNT(stock.book_id) AS stock_availability " + "FROM books " + "LEFT JOIN stock "
                 + "ON books.book_id = stock.book_id " + "GROUP BY books.book_id ";
@@ -21,7 +21,7 @@ public class SQLs {
         }
     }
 
-    public static String getAllOrdersSQL(OrderSort sort) {
+    public static String getAllOrdersSQL(Constants.OrderSort sort) {
         String firstPart = "SELECT * FROM orders ";
 
         switch (sort) {
@@ -36,7 +36,7 @@ public class SQLs {
         }
     }
 
-    public static String getAllRequestsSQL(RequestSort sort) {
+    public static String getAllRequestsSQL(Constants.RequestSort sort) {
         String firstPart = "SELECT COUNT(requests.book_id) AS quantity, books.title " + "FROM requests " + "JOIN books "
                 + "ON requests.book_id = books.book_id " + "GROUP BY requests.book_id ";
 

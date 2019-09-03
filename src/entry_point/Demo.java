@@ -2,28 +2,25 @@ package entry_point;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
 import api.model.IRequest;
 import facade.LibraryFacade;
-import utility.BookSort;
-import utility.OrderSort;
-import utility.RequestSort;
+import utility.Constants;
 
 public class Demo {
 
     public static void main(String args[]) {
         
-        //showBooks(BookSort.BY_TITLE);
+        showBooks(Constants.BookSort.BY_TITLE);
         
-        //showOrders(OrderSort.BY_PRICE);
+        showOrders(Constants.OrderSort.BY_PRICE);
         
-        showRequests(RequestSort.BY_ALPHABET);
+        showRequests(Constants.RequestSort.BY_ALPHABET);
     }
 
-    public static void showBooks(BookSort sort) {
+    public static void showBooks(Constants.BookSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();        
         List<IBook> books = facade.getAllBooks(sort);
         
@@ -36,7 +33,7 @@ public class Demo {
         }
     }
     
-    public static void showOrders(OrderSort sort) {
+    public static void showOrders(Constants.OrderSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();        
         List<IOrder> orders = facade.getAllOrders(sort);
         
@@ -48,7 +45,7 @@ public class Demo {
         }
     }
     
-    public static void showRequests(RequestSort sort) {
+    public static void showRequests(Constants.RequestSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();  
         List<IRequest> requests = facade.getAllRequests(sort);
         

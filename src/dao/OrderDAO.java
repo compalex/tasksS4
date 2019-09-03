@@ -8,13 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import api.dao.IOrderDAO;
 import api.model.IModel;
 import api.model.IOrder;
 import model.Order;
+import utility.Constants;
 import utility.Converter;
-import utility.OrderSort;
 import utility.SQLs;
 
 public class OrderDAO implements IOrderDAO {
@@ -25,7 +24,7 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public List<IModel> getAllOrders(OrderSort sort) {
+    public List<IModel> getAllOrders(Constants.OrderSort sort) {
         Statement statement = null;
         ResultSet resultSet = null;
         Class<Order> classType = Order.class;

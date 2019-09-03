@@ -2,7 +2,7 @@ package model;
 
 import java.util.Date;
 
-import api.Columns;
+import api.annotations.Columns;
 import api.model.IOrder;
 
 public class Order implements IOrder {

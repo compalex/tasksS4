@@ -1,12 +1,11 @@
 package service;
 
 import java.util.List;
-
 import api.dao.IOrderDAO;
 import api.model.IOrder;
 import api.service.IOrderService;
 import config.JDBCInstaller;
-import utility.OrderSort;
+import utility.Constants;
 
 public class OrderService implements IOrderService {
     private IOrderDAO orderDAO;
@@ -16,7 +15,8 @@ public class OrderService implements IOrderService {
         orderDAO = jdbc.createOrderDAO();
     }
     
-    public List<IOrder> getAllOrders(OrderSort sort) {
+    @Override
+    public List<IOrder> getAllOrders(Constants.OrderSort sort) {
         return (List<IOrder>)(List<?>)orderDAO.getAllOrders(sort);
     }
     
