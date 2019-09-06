@@ -5,46 +5,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import api.dao.IOrderDAO;
-import api.model.IModel;
 import api.model.IOrder;
 import model.Order;
 import utility.Constants;
 import utility.Converter;
 import utility.SQLs;
+import utility.Constants.TypeDAO;
 
-public class OrderDAO implements IOrderDAO {
-    private Connection connection;
+public class OrderDAO extends ModelDAO implements IOrderDAO {
     
     public OrderDAO(Connection connection) {
-        this.connection = connection;
+        super(TypeDAO.ORDER, connection);
+        createDAO();
     }
 
     @Override
-    public List<IModel> getAllOrders(Constants.OrderSort sort) {
+    public List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception {
         Statement statement = null;
         ResultSet resultSet = null;
         Class<Order> classType = Order.class;
-
-        try {
-            String sql = SQLs.getAllOrdersSQL(sort);
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            return Converter.getListFromResultSet(classType, resultSet);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<IModel>();
-        } finally {
-            try {
-                statement.close();
-                resultSet.close();
-            } catch (SQLException ex) {
-            ex.printStackTrace();
-            }
-        }
+        String sql = SQLs.getAllOrdersSQL(sort);
+        statement = connection.createStatement();
+        resultSet = statement.executeQuery(sql);
+        return Converter.getListFromResultSet(classType, resultSet);
     }
 
     @Override
@@ -68,7 +54,7 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public void addOrder(IOrder order) {
+    public boolean addOrder(IOrder order) {
         Statement statement = null;
         try {
             statement = connection.createStatement();
@@ -79,13 +65,13 @@ public class OrderDAO implements IOrderDAO {
                     + ", '"
                     + order.getStatus()
                     +"')");   
+            return true;
         } catch(SQLException e) {
             e.printStackTrace();
+            return false;
         } finally {
             try {
                 statement.close();
-                //am I supposed to close connection at all?
-                connection.close();
             } catch(SQLException ex) {
                 System.err.print("Couldn't close DB connection");
                 ex.printStackTrace();
@@ -94,10 +80,17 @@ public class OrderDAO implements IOrderDAO {
     }
 
     @Override
-    public void completeOrder(IOrder order) {    
+    public boolean completeOrder(IOrder order) {
+        return false;
     }
 
     @Override
-    public void cancelOrder(IOrder book) {        
+    public boolean cancelOrder(IOrder book) {
+        return false;
+    }
+
+    @Override
+    void createDAO() {
+        // TODO Auto-generated method stub   
     }
 }

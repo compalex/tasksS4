@@ -16,7 +16,7 @@ public class RequestService implements IRequestService {
     }
     
     @Override
-    public List<IRequest> getAllRequests(Constants.RequestSort sort) {
-        return (List<IRequest>)(List<?>)requestDAO.getAllRequests(sort);
+    public List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception {
+        return requestDAO.getAllRequests(sort);
     }
 }

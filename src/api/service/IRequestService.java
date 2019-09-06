@@ -6,5 +6,5 @@ import utility.Constants;
 
 public interface IRequestService {
 
-    List<IRequest> getAllRequests(Constants.RequestSort sort);
+    List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception;
 }

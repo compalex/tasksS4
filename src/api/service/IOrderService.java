@@ -6,5 +6,5 @@ import utility.Constants;
 
 public interface IOrderService {
     
-    List<IOrder> getAllOrders(Constants.OrderSort sort);
+    List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception;
 }

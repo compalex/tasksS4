@@ -15,14 +15,21 @@ public class Demo {
         
         showBooks(Constants.BookSort.BY_TITLE);
         
-        showOrders(Constants.OrderSort.BY_PRICE);
+      //  showOrders(Constants.OrderSort.BY_PRICE);
         
-        showRequests(Constants.RequestSort.BY_ALPHABET);
+      //  showRequests(Constants.RequestSort.BY_ALPHABET);
+        
+        showBookDescription(2);
     }
 
     public static void showBooks(Constants.BookSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();        
-        List<IBook> books = facade.getAllBooks(sort);
+        List<IBook> books = null;
+        try {
+            books = facade.getAllBooks(sort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         for(IBook book : books) {
             System.out.println("____________");
@@ -35,7 +42,12 @@ public class Demo {
     
     public static void showOrders(Constants.OrderSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();        
-        List<IOrder> orders = facade.getAllOrders(sort);
+        List<IOrder> orders = null;
+        try {
+            orders = facade.getAllOrders(sort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         for(IOrder order : orders) {
             System.out.println("-------------");
@@ -47,12 +59,23 @@ public class Demo {
     
     public static void showRequests(Constants.RequestSort sort) {
         ILibraryFacade facade = LibraryFacade.getInstance();  
-        List<IRequest> requests = facade.getAllRequests(sort);
+        List<IRequest> requests = null;
+        try {
+            requests = facade.getAllRequests(sort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         for(IRequest request : requests) {
             System.out.println("-_-___-_-___-_-");
             System.out.println(request.getTitle());
             System.out.println(request.getQuantity());
         }
+    }
+    
+    public static void showBookDescription(int bookId) {
+        ILibraryFacade facade = LibraryFacade.getInstance();
+        String description = facade.getBookDescription(bookId);
+        System.out.println(description);
     }
 }

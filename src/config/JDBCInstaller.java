@@ -5,10 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
 
-import dao.BookDAO;
-import dao.OrderDAO;
-import dao.RequestDAO;
-
 public class JDBCInstaller {
     private Connection connection;
     private static JDBCInstaller instance;
@@ -33,16 +29,8 @@ public class JDBCInstaller {
         }
         return instance;
     }
-    
-    public BookDAO createBookDAO() {
-        return new BookDAO(connection);
-    }
 
-    public OrderDAO createOrderDAO() {
-        return new OrderDAO(connection);
-    }
-    
-    public RequestDAO createRequestDAO() {
-        return new RequestDAO(connection);
+    public Connection getConnection() {
+        return connection;
     }
 }

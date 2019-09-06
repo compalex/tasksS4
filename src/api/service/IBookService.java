@@ -6,5 +6,6 @@ import utility.Constants;
 
 public interface IBookService {
     
-    List<IBook> getAllBooks(Constants.BookSort sort);
+    List<IBook> getAllBooks(Constants.BookSort sort) throws Exception;
+    String getBookDescription(int bookId);
 }

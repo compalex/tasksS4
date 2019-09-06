@@ -16,8 +16,8 @@ public class OrderService implements IOrderService {
     }
     
     @Override
-    public List<IOrder> getAllOrders(Constants.OrderSort sort) {
-        return (List<IOrder>)(List<?>)orderDAO.getAllOrders(sort);
+    public List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception {
+        return orderDAO.getAllOrders(sort);
     }
     
     public void addOrder(double price) {

@@ -8,9 +8,11 @@ import api.model.IBook;
 public class Book implements IBook {
     @Columns(name = "book_id")
     private Integer id;
+    @Columns(name = "title")
     private String title;
     @Columns(name = "publication_date")
     private Date date;
+    @Columns(name = "price")
     private Double price;
     @Columns(name = "stock_availability")
     private Integer stock;

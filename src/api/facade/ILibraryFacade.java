@@ -8,8 +8,9 @@ import utility.Constants;
 
 public interface ILibraryFacade {
     
-    List<IBook> getAllBooks(Constants.BookSort sort);
-    List<IOrder> getAllOrders(Constants.OrderSort sort);
-    List<IRequest> getAllRequests(Constants.RequestSort sort);
-    void addOrder(double price);
+    List<IBook> getAllBooks(Constants.BookSort sort) throws Exception;
+    List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception;
+    List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception;
+    String getBookDescription(int bookId);
+    boolean addOrder(double price);
 }

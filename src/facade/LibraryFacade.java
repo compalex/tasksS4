@@ -27,22 +27,28 @@ public class LibraryFacade implements ILibraryFacade {
     }
 
     @Override
-    public List<IBook> getAllBooks(Constants.BookSort sort) {
+    public List<IBook> getAllBooks(Constants.BookSort sort) throws Exception {
         return bookService.getAllBooks(sort);
     }
 
     @Override
-    public List<IOrder> getAllOrders(Constants.OrderSort sort) {
+    public List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception {
         return orderService.getAllOrders(sort);
     }
 
     @Override
-    public List<IRequest> getAllRequests(Constants.RequestSort sort) {
+    public List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception {
         return requestService.getAllRequests(sort);
     }
 
     @Override
-    public void addOrder(double price) {
-        new OrderService().addOrder(price);
+    public String getBookDescription(int bookId) {
+        return bookService.getBookDescription(bookId);
+    }
+    
+    @Override
+    public boolean addOrder(double price) {
+        orderService.addOrder(price);
+        return true;
     }
 }

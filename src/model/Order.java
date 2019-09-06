@@ -10,7 +10,9 @@ public class Order implements IOrder {
     private Integer id;
     @Columns(name = "date")
     private Date orderDate;
+    @Columns(name = "price")
     private Double price;
+    @Columns(name = "status")
     private String status;
     
     public Order() {
