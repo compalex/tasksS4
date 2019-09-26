@@ -12,13 +12,9 @@ import utility.Constants;
 public class Demo {
 
     public static void main(String args[]) {
-        
         showBooks(Constants.BookSort.BY_TITLE);
-        
-      //  showOrders(Constants.OrderSort.BY_PRICE);
-        
-      //  showRequests(Constants.RequestSort.BY_ALPHABET);
-        
+        showOrders(Constants.OrderSort.BY_PRICE);
+        showRequests(Constants.RequestSort.BY_ALPHABET);
         showBookDescription(2);
     }
 

@@ -5,6 +5,7 @@ import api.dao.IRequestDAO;
 import api.model.IRequest;
 import api.service.IRequestService;
 import config.JDBCInstaller;
+import dao.DAOFactory;
 import utility.Constants;
 
 public class RequestService implements IRequestService {
@@ -12,7 +13,7 @@ public class RequestService implements IRequestService {
         
     public RequestService() {
             JDBCInstaller jdbc = JDBCInstaller.getInstance();
-            requestDAO = jdbc.createRequestDAO();
+            requestDAO = DAOFactory.getRequestDAO(jdbc.getConnection());
     }
     
     @Override

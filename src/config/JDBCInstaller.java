@@ -6,8 +6,8 @@ import java.sql.DriverManager;
 import java.util.Properties;
 
 public class JDBCInstaller {
-    private Connection connection;
     private static JDBCInstaller instance;
+    private static Connection connection;
     
     private JDBCInstaller() throws Exception{
         Properties props = new Properties();
@@ -30,7 +30,7 @@ public class JDBCInstaller {
         return instance;
     }
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         return connection;
     }
 }

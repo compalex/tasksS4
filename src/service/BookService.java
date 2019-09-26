@@ -7,14 +7,13 @@ import api.service.IBookService;
 import config.JDBCInstaller;
 import dao.DAOFactory;
 import utility.Constants;
-import utility.Constants.TypeDAO;
 
 public class BookService implements IBookService {
     private IBookDAO bookDAO;
     
     public BookService() {
         JDBCInstaller jdbc = JDBCInstaller.getInstance();
-        bookDAO = DAOFactory.getDAO(TypeDAO.BOOK, jdbc.getConnection());
+        bookDAO = DAOFactory.getBookDAO(jdbc.getConnection());
     }
     
     @Override
@@ -24,7 +23,6 @@ public class BookService implements IBookService {
 
     @Override
     public String getBookDescription(int bookId) {
-        // TODO Auto-generated method stub
         return null;
     }
 }

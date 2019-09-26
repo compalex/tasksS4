@@ -8,24 +8,20 @@ import api.dao.IBookDAO;
 import api.model.IBook;
 import model.Book;
 import utility.Constants;
-import utility.Constants.TypeDAO;
 import utility.Converter;
 import utility.SQLs;
 
 public class BookDAO extends ModelDAO implements IBookDAO {
 
     public BookDAO(Connection connection) {
-        super(TypeDAO.BOOK, connection);
-        createDAO();
+        super(connection);
     }
 
     @Override
     public List<IBook> getAllBooks(Constants.BookSort sort) throws Exception {
         Statement statement = null;
         ResultSet resultSet = null;
-        // could be Class<?> or <? extends parentClass>
         Class<Book> classType = Book.class;
-
         String sql = SQLs.getAllBooksSQL(sort);
         statement = connection.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, 
@@ -56,7 +52,12 @@ public class BookDAO extends ModelDAO implements IBookDAO {
     }
 
     @Override
-    protected void createDAO() {
-        // TODO Auto-generated method stub
+    void updateRecord() {
+   
+    }
+
+    @Override
+    void deleteRecord() {
+   
     }
 }

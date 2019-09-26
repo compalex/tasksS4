@@ -13,13 +13,11 @@ import model.Order;
 import utility.Constants;
 import utility.Converter;
 import utility.SQLs;
-import utility.Constants.TypeDAO;
 
 public class OrderDAO extends ModelDAO implements IOrderDAO {
     
     public OrderDAO(Connection connection) {
-        super(TypeDAO.ORDER, connection);
-        createDAO();
+        super(connection);
     }
 
     @Override
@@ -90,7 +88,14 @@ public class OrderDAO extends ModelDAO implements IOrderDAO {
     }
 
     @Override
-    void createDAO() {
-        // TODO Auto-generated method stub   
+    void updateRecord() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    void deleteRecord() {
+        // TODO Auto-generated method stub
+        
     }
 }

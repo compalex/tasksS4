@@ -1,21 +1,21 @@
 package dao;
 
 import java.sql.Connection;
+import api.dao.IBookDAO;
+import api.dao.IOrderDAO;
+import api.dao.IRequestDAO;
 
-import utility.Constants.TypeDAO;
+public class DAOFactory {
 
-public class DAOFactory extends AbstractFactory {
+    public static IBookDAO getBookDAO(Connection connection) {
+        return new BookDAO(connection);
+    }
     
-    public static ModelDAO getDAO(TypeDAO typeDAO, Connection connection) {
-        switch(typeDAO) {
-            case BOOK:
-                return new BookDAO(connection);
-            case ORDER:
-                return new OrderDAO(connection);
-            case REQUEST:
-                return new RequestDAO(connection);
-            default: 
-                return null;
-        }
+    public static IOrderDAO getOrderDAO(Connection connection) {
+        return new OrderDAO(connection);
+    }
+    
+    public static IRequestDAO getRequestDAO(Connection connection) {
+        return new RequestDAO(connection);
     }
 }

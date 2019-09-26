@@ -5,6 +5,7 @@ import api.dao.IOrderDAO;
 import api.model.IOrder;
 import api.service.IOrderService;
 import config.JDBCInstaller;
+import dao.DAOFactory;
 import utility.Constants;
 
 public class OrderService implements IOrderService {
@@ -12,7 +13,7 @@ public class OrderService implements IOrderService {
 
     public OrderService() {
         JDBCInstaller jdbc = JDBCInstaller.getInstance();
-        orderDAO = jdbc.createOrderDAO();
+        orderDAO = DAOFactory.getOrderDAO(jdbc.getConnection());
     }
     
     @Override

@@ -7,7 +7,6 @@ import api.model.IRequest;
 import utility.Constants;
 
 public interface ILibraryFacade {
-    
     List<IBook> getAllBooks(Constants.BookSort sort) throws Exception;
     List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception;
     List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception;

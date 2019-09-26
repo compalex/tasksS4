@@ -18,10 +18,4 @@ public class Constants {
         BY_QUANTITY,
         BY_ALPHABET
     }
-    
-    public enum TypeDAO {
-        BOOK,
-        ORDER,
-        REQUEST
-    }
 }

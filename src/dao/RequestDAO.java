@@ -10,14 +10,12 @@ import model.Request;
 import utility.Constants;
 import utility.Converter;
 import utility.SQLs;
-import utility.Constants.TypeDAO;
 
 public class RequestDAO extends ModelDAO implements IRequestDAO {
     private Connection connection;
     
     public RequestDAO(Connection connection) {
-        super(TypeDAO.REQUEST, connection);
-        createDAO();
+        super(connection);
     }
     
     @Override
@@ -37,7 +35,13 @@ public class RequestDAO extends ModelDAO implements IRequestDAO {
     }
 
     @Override
-    void createDAO() {
+    void updateRecord() {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    void deleteRecord() {
         // TODO Auto-generated method stub
         
     }
