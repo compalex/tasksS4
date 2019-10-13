@@ -30,7 +30,7 @@ public class JDBCInstaller {
         return instance;
     }
 
-    public static Connection getConnection() {
+    public Connection getConnection() {
         return connection;
     }
 }

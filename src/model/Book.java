@@ -1,11 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Date;
-
 import api.annotations.Columns;
 import api.model.IBook;
 
-public class Book implements IBook {
+public class Book implements IBook, Serializable {
     @Columns(name = "book_id")
     private Integer id;
     @Columns(name = "title")
@@ -14,8 +14,8 @@ public class Book implements IBook {
     private Date date;
     @Columns(name = "price")
     private Double price;
-    @Columns(name = "stock_availability")
-    private Integer stock;
+    @Columns(name = "description")
+    private String description;
     
     public Book() {
         
@@ -40,9 +40,10 @@ public class Book implements IBook {
     public double getPrice() {
         return price;
     }
-    
+
     @Override
-    public int getStockAvailability() {
-        return stock;
+    public String getDescription() {
+        return description;
     }
+    
 }

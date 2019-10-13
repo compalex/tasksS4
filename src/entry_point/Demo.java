@@ -1,49 +1,60 @@
 package entry_point;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
-import api.model.IRequest;
 import facade.LibraryFacade;
-import utility.Constants;
+import utility.Constants.BookSort;
+import utility.Constants.OrderSort;
+import utility.Constants.RequestSort;
+import utility.Constants.StaleBookSort;
 
 public class Demo {
-
+    private static ILibraryFacade facade;
+    
     public static void main(String args[]) {
-        showBooks(Constants.BookSort.BY_TITLE);
-        showOrders(Constants.OrderSort.BY_PRICE);
-        showRequests(Constants.RequestSort.BY_ALPHABET);
-        showBookDescription(2);
-    }
-
-    public static void showBooks(Constants.BookSort sort) {
-        ILibraryFacade facade = LibraryFacade.getInstance();        
-        List<IBook> books = null;
+        facade = LibraryFacade.getInstance();        
         try {
-            books = facade.getAllBooks(sort);
+            //showBooks(BookSort.BY_TITLE);
+            //addBookToStock();
+            //showOrders(OrderSort.BY_PRICE);
+            //showRequests(RequestSort.BY_ALPHABET);
+            //showStaleBooks(StaleBookSort.BY_DATE);
+            //showBookDescription(2);
+            copyAnOrder(3);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static void addBookToStock() throws Exception {
+        Map<IBook, Integer> books = facade.getAllBooks(BookSort.BY_PRICE);
         
-        for(IBook book : books) {
+        for(IBook book : books.keySet()) {
+            if(book.getId() == 3) {
+                System.out.println(facade.addBookToStock(book));
+            }
+        }
+    }
+
+    private static void showBooks(BookSort sort) throws Exception {   
+        Map<IBook, Integer> books = facade.getAllBooks(sort);
+        
+        for(IBook book : books.keySet()) {
             System.out.println("____________");
             System.out.println(book.getId() + ". " + book.getTitle());
             System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(book.getPublicationDate()));
             System.out.println(book.getPrice());
-            System.out.println(book.getStockAvailability() + " in stock");
+            System.out.println(books.get(book) + " in stock");
         }
     }
     
-    public static void showOrders(Constants.OrderSort sort) {
-        ILibraryFacade facade = LibraryFacade.getInstance();        
-        List<IOrder> orders = null;
-        try {
-            orders = facade.getAllOrders(sort);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private static void showOrders(OrderSort sort) throws Exception {   
+        List<IOrder> orders = facade.getAllOrders(sort);
         
         for(IOrder order : orders) {
             System.out.println("-------------");
@@ -53,25 +64,43 @@ public class Demo {
         }
     }
     
-    public static void showRequests(Constants.RequestSort sort) {
-        ILibraryFacade facade = LibraryFacade.getInstance();  
-        List<IRequest> requests = null;
-        try {
-            requests = facade.getAllRequests(sort);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        for(IRequest request : requests) {
-            System.out.println("-_-___-_-___-_-");
-            System.out.println(request.getTitle());
-            System.out.println(request.getQuantity());
+    private static void showRequests(RequestSort sort) throws Exception {
+        Map<IBook, Integer> books = facade.getAllRequests(RequestSort.BY_ALPHABET);
+
+        for(IBook book : books.keySet()) {
+            System.out.println("____________");
+            System.out.println(book.getId() + ". " + book.getTitle());
+            System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(book.getPublicationDate()));
+            System.out.println(book.getPrice());
+            System.out.println(books.get(book) + " requests");
         }
     }
     
-    public static void showBookDescription(int bookId) {
-        ILibraryFacade facade = LibraryFacade.getInstance();
+    private static void showStaleBooks(StaleBookSort sort) throws Exception {
+        Map<IBook, List<Date>> books = facade.getStaleBooks(sort);
+        
+        for(IBook book : books.keySet()) {
+            for(Date date : books.get(book)) {
+                System.out.println("____________");
+                System.out.println(book.getId() + ". " + book.getTitle());
+                System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(book.getPublicationDate()));
+                System.out.println(book.getPrice());
+                System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(date));
+            }
+        }
+    }
+    
+    private static void showBookDescription(int bookId) throws Exception {
         String description = facade.getBookDescription(bookId);
         System.out.println(description);
+    }
+
+    private static void copyAnOrder(int id) throws Exception {
+        IOrder order = facade.getCopyOfOrder(id);
+        
+        System.out.println("-------------");
+        System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(order.getOrderDate()));
+        System.out.println(order.getPrice());
+        System.out.println(order.getStatus());
     }
 }

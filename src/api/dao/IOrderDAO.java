@@ -3,10 +3,9 @@ package api.dao;
 import java.util.Date;
 import java.util.List;
 import api.model.IOrder;
-import utility.Constants;
 
 public interface IOrderDAO {
-    public List<IOrder> getAllOrders(Constants.OrderSort sort) throws Exception;
+    public List<IOrder> getAllOrders() throws Exception;
     public List<IOrder> getCompletedOrdersOverTime(Date dateFrom, Date dateTo);
     public double getAmountOfFundsOverTime(Date dateFrom, Date dateTo);
     public int getNumOfCompletedOrdersOverTime(Date dateFrom, Date dateTo);
