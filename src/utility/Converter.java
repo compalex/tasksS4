@@ -2,6 +2,7 @@ package utility;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Constructor;
@@ -14,8 +15,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+
 import api.annotations.Columns;
 import api.model.IBookInStock;
+import dao.DAOFactory;
+import utility.Constants.Database;
 
 public class Converter {
 
@@ -123,4 +128,13 @@ public class Converter {
         }
         return staleBooks;
     }
+    
+    public static void initConfig() throws Exception {
+        Properties props = new Properties();
+        props.load(new FileInputStream("config.properties"));
+        DAOFactory.database = Database.valueOf(props.getProperty(Constants.PROPERTY_DATABASE));
+        Constants.unsoldMonth = Integer.parseInt(props.getProperty(Constants.PROPERTY_UNSOLD_MONTH));
+        Constants.autoRequest = Boolean.parseBoolean(props.getProperty(Constants.PROPERTY_AUTOFILL));
+    }
+
 }

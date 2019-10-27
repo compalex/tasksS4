@@ -8,47 +8,53 @@ import java.util.Properties;
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
+import config.InjectionHandler;
 import api.model.IBookRequest;
 import dao.DAOFactory;
 import service.BookService;
 import service.OrderService;
+import service.RequestService;
+import service.StockService;
 import utility.Constants;
 import utility.Constants.BookSort;
 import utility.Constants.Database;
 import utility.Constants.OrderSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
+import static utility.Converter.initConfig;
 
 public class LibraryFacade implements ILibraryFacade {
     private static volatile ILibraryFacade instance = new LibraryFacade();
     private BookService bookService;
     private OrderService orderService;
+    private RequestService requestService;
+    private StockService stockService;
 
     private LibraryFacade() {
         try {
             initConfig();
-            bookService = new BookService();
-            orderService = new OrderService();
+            initService(); 
+            stockService = new StockService();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void initConfig() throws Exception {
-        Properties props = new Properties();
-        props.load(new FileInputStream("config.properties"));
-        DAOFactory.database = Database.valueOf(props.getProperty("DATABASE"));
-        Constants.unsoldMonth = Integer.parseInt(props.getProperty("UNSOLD_MONTH"));
-        Constants.autoRequest = Boolean.parseBoolean(props.getProperty("AUTO_COMPLETE_REQUEST"));
-    }
-
+    public static ILibraryFacade getInstance() {
+        return instance;
+    }    
+    
+    private void initService() throws Exception {
+        bookService = new BookService();
+        orderService = new OrderService();
+        requestService = new RequestService();
+        stockService = new StockService();
+        InjectionHandler.doInjection(bookService, orderService, requestService, stockService);
+    }    
+    
     @Override
     public IOrder getCopyOfOrder(int id) throws Exception {
         return orderService.getCopyOfOrder(id);
-    }
-    
-    public static ILibraryFacade getInstance() {
-        return instance;
     }
 
     @Override
@@ -83,7 +89,7 @@ public class LibraryFacade implements ILibraryFacade {
 
     @Override
     public boolean addBookToStock(IBook book) throws Exception {
-        return bookService.addBookToStock(book);
+        return stockService.addBookToStock(book);
     }
 
     @Override

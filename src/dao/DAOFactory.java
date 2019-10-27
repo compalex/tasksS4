@@ -5,6 +5,7 @@ import api.dao.IOrderDAO;
 import api.dao.IRequestDAO;
 import api.dao.IStockDAO;
 import config.JDBCInstaller;
+import utility.Constants;
 import utility.Constants.Database;
 
 public class DAOFactory {
@@ -15,9 +16,9 @@ public class DAOFactory {
             case MY_SQL:
                 return new dao.sql.BookDAO(JDBCInstaller.getInstance().getConnection());
             case SERIAL:
-                return new dao.ser.BookDAO("books.ser");
+                return new dao.ser.BookDAO(Constants.PATH_BOOK_SER);
             case CSV_FILES:
-                return new dao.csv.BookDAO("books.csv");
+                return new dao.csv.BookDAO(Constants.PATH_BOOK_CSV);
             default:
                 return null;
         }
@@ -28,9 +29,9 @@ public class DAOFactory {
             case MY_SQL:
                 return new dao.sql.OrderDAO(JDBCInstaller.getInstance().getConnection());
             case SERIAL:
-                return new dao.ser.OrderDAO("orders.ser");
+                return new dao.ser.OrderDAO(Constants.PATH_ORDER_SER);
             case CSV_FILES:
-                return new dao.csv.OrderDAO("orders.csv");
+                return new dao.csv.OrderDAO(Constants.PATH_ORDER_CSV);
             default:
                 return null;
         }
@@ -41,9 +42,9 @@ public class DAOFactory {
             case MY_SQL:
                 return new dao.sql.RequestDAO(JDBCInstaller.getInstance().getConnection());
             case SERIAL:
-                return new dao.ser.RequestDAO("bookRequests.ser");
+                return new dao.ser.RequestDAO(Constants.PATH_REQUEST_SER);
             case CSV_FILES:
-                return new dao.csv.RequestDAO("bookRequests.csv");
+                return new dao.csv.RequestDAO(Constants.PATH_REQUEST_CSV);
             default:
                 return null;
         }
@@ -54,9 +55,9 @@ public class DAOFactory {
             case MY_SQL:
                 return new dao.sql.StockDAO(JDBCInstaller.getInstance().getConnection());
             case SERIAL:
-                return new dao.ser.StockDAO("stock.ser");
+                return new dao.ser.StockDAO(Constants.PATH_STOCK_SER);
             case CSV_FILES:
-                return new dao.csv.StockDAO("stock.csv");
+                return new dao.csv.StockDAO(Constants.PATH_STOCK_CSV);
             default:
                 return null;
         }

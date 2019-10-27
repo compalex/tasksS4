@@ -5,9 +5,8 @@ import java.util.Date;
 import api.annotations.Columns;
 import api.model.IOrder;
 
-public class Order implements IOrder, Serializable, Cloneable {
-    private static final long serialVersionUID = 2869082540505853668L;
-    
+public class Order implements IOrder, Serializable {
+
     @Columns(name = "order_id")
     private Integer id;
     @Columns(name = "date")

@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import api.model.IBookInStock;
 
-public class BookInStock implements IBookInStock, Serializable {
+public class BookInStock implements IBookInStock {
+
     private Integer id;
     private Integer bookId;
     private Date date;

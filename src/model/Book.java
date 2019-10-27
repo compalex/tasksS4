@@ -1,11 +1,12 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Date;
 import api.annotations.Columns;
 import api.model.IBook;
 
-public class Book implements IBook, Serializable {
+public class Book implements IBook {
+    
+    
     @Columns(name = "book_id")
     private Integer id;
     @Columns(name = "title")
@@ -17,6 +18,7 @@ public class Book implements IBook, Serializable {
     @Columns(name = "description")
     private String description;
     
+    //used by dao
     public Book() {
         
     }

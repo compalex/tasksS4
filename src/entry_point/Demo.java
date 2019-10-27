@@ -19,13 +19,13 @@ public class Demo {
     public static void main(String args[]) {
         facade = LibraryFacade.getInstance();        
         try {
-            //showBooks(BookSort.BY_TITLE);
+            showBooks(BookSort.BY_TITLE);
             //addBookToStock();
-            //showOrders(OrderSort.BY_PRICE);
-            //showRequests(RequestSort.BY_ALPHABET);
+            showOrders(OrderSort.BY_PRICE);
+            showRequests(RequestSort.BY_ALPHABET);
             //showStaleBooks(StaleBookSort.BY_DATE);
             //showBookDescription(2);
-            copyAnOrder(3);
+            //copyAnOrder(3);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -68,7 +68,7 @@ public class Demo {
         Map<IBook, Integer> books = facade.getAllRequests(RequestSort.BY_ALPHABET);
 
         for(IBook book : books.keySet()) {
-            System.out.println("____________");
+            System.out.println("__ __ ___ __ ___");
             System.out.println(book.getId() + ". " + book.getTitle());
             System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(book.getPublicationDate()));
             System.out.println(book.getPrice());

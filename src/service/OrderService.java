@@ -1,18 +1,18 @@
 package service;
 
 import java.util.List;
+import api.annotations.Inject;
 import api.dao.IOrderDAO;
 import api.model.IOrder;
 import api.service.IOrderService;
-import dao.DAOFactory;
-import model.Order;
 import utility.Constants.OrderSort;
 
 public class OrderService implements IOrderService {
+    @Inject(daoType = "orderDAO")
     private IOrderDAO orderDAO;
 
     public OrderService() throws Exception {
-        orderDAO = DAOFactory.getOrderDAO();
+
     }
     
     @Override

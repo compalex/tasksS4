@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import api.annotations.Inject;
 import api.dao.IBookDAO;
 import api.dao.IRequestDAO;
 import api.dao.IStockDAO;
@@ -21,60 +22,40 @@ import utility.Constants;
 import utility.Converter;
 
 public class BookService implements IBookService {
+    @Inject(daoType = "bookDAO") 
     private IBookDAO bookDAO;
-    private IStockDAO stockDAO;
-    private IRequestDAO requestDAO;
 
     public BookService() throws Exception {
-        bookDAO = DAOFactory.getBookDAO();
-        stockDAO = DAOFactory.getStockDAO();
-        requestDAO = DAOFactory.getRequestDAO();
+
     }
 
     @Override
     public Map<IBook, Integer> getAllBooks(BookSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        List<IBookInStock> booksInStock = stockDAO.getStock();
+        StockService stockService = new StockService();
+        List<IBookInStock> booksInStock = stockService.getStock();
         return getBookStockMap(allBooks, booksInStock);
     }
 
     @Override
     public Map<IBook, Integer> getRequests(RequestSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        List<IBookRequest> requests = requestDAO.getAllRequests();
+        RequestService requestService = new RequestService();
+        List<IBookRequest> requests = requestService.getAllRequests();
         return getBookRequestMap(allBooks, requests);
     }
     
     @Override
     public Map<IBook, List<Date>> getStaleBooks(StaleBookSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        List<IBookInStock> booksInStock = stockDAO.getStock();
+        StockService stockService = new StockService();
+        List<IBookInStock> booksInStock = stockService.getStock();
         return getStaleBooksMap(allBooks, booksInStock);
     }
     
     @Override
     public String getBookDescription(int bookId) throws Exception {
         return bookDAO.getBookDescriprion(bookId);
-    }
-
-    @Override
-    public boolean addBookToStock(IBook book) throws Exception {
-        List<IBookInStock> booksInStock = stockDAO.getStock();
-        int previousId = booksInStock.get(booksInStock.size() - 1).getId();
-        if(Constants.autoRequest) {
-            deleteRequests(book);
-        }
-        return stockDAO.addRecord(new BookInStock(previousId + 1, book.getId(), new Date()));
-    }
-
-    private void deleteRequests(IBook book) throws Exception {
-        List<IBookRequest> requests = requestDAO.getAllRequests();
-        
-        for(IBookRequest request : requests) {
-            if(request.getBookId() == book.getId()) {
-                requestDAO.deleteRecord(request.getRequestId());
-            }
-        }
     }
 
     private Map<IBook, Integer> getBookStockMap(List<IBook> books, List<IBookInStock> booksInStock) {

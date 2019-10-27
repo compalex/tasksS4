@@ -13,5 +13,4 @@ public interface IBookService {
     Map<IBook, Integer> getRequests(RequestSort sort) throws Exception;
     Map<IBook, List<Date>> getStaleBooks(StaleBookSort sort) throws Exception;
     String getBookDescription(int bookId) throws Exception;
-    boolean addBookToStock(IBook book) throws Exception;
 }

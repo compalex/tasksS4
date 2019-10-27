@@ -1,23 +1,33 @@
 package service;
 
 import java.util.List;
+
+import api.annotations.Inject;
 import api.dao.IRequestDAO;
-import api.model.IRequest;
+import api.model.IBook;
+import api.model.IBookRequest;
 import api.service.IRequestService;
-import config.JDBCInstaller;
 import dao.DAOFactory;
-import utility.Constants;
 
 public class RequestService implements IRequestService {
+    @Inject(daoType = "requestDAO") 
     private IRequestDAO requestDAO;
-        
-    public RequestService() {
-            JDBCInstaller jdbc = JDBCInstaller.getInstance();
-            requestDAO = DAOFactory.getRequestDAO(jdbc.getConnection());
-    }
     
-    @Override
-    public List<IRequest> getAllRequests(Constants.RequestSort sort) throws Exception {
-        return requestDAO.getAllRequests(sort);
+    public RequestService() throws Exception {
+        requestDAO = DAOFactory.getRequestDAO();
+    }
+
+    public List<IBookRequest> getAllRequests() throws Exception {
+        return requestDAO.getAllRequests();
+    }
+
+    public void deleteRequests(IBook book) throws Exception {
+        List<IBookRequest> requests = requestDAO.getAllRequests();
+        
+        for(IBookRequest request : requests) {
+            if(request.getBookId() == book.getId()) {
+                requestDAO.deleteRecord(request.getRequestId());
+            }
+        }
     }
 }

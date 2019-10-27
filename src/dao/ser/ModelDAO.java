@@ -26,7 +26,7 @@ public class ModelDAO implements IModelDAO {
     }
     
     public boolean addRecords(List<? extends IModel> models) throws Exception {
-        FileOutputStream file = new FileOutputStream(pathName, true);
+        FileOutputStream file = new FileOutputStream(pathName, false);
         ObjectOutputStream out = new ObjectOutputStream(file);
         out.writeObject(models);
         out.close();
