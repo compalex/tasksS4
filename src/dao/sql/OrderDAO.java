@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import api.dao.IOrderDAO;
-import api.model.IModel;
 import api.model.IOrder;
 import model.Order;
 import utility.Converter;
@@ -24,13 +23,10 @@ public class OrderDAO extends ModelDAO implements IOrderDAO {
     @Override
     public List<IOrder> getAllOrders() throws Exception {
         OrderSort sort = OrderSort.BY_DATE;
-        
-        Statement statement = null;
-        ResultSet resultSet = null;
         Class<Order> classType = Order.class;
         String sql = SQLs.getAllOrdersSQL(sort);
-        statement = connection.createStatement();
-        resultSet = statement.executeQuery(sql);
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
         return Converter.getListFromResultSet(classType, resultSet);
     }
 
@@ -89,6 +85,4 @@ public class OrderDAO extends ModelDAO implements IOrderDAO {
     public boolean cancelOrder(IOrder book) {
         return false;
     }
-
-
 }

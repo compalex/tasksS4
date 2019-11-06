@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.util.List;
 import api.dao.IBookDAO;
 import api.model.IBook;
+import utility.Constants;
 
 public class BookDAO extends ModelDAO implements IBookDAO {
 
@@ -28,12 +29,11 @@ public class BookDAO extends ModelDAO implements IBookDAO {
                 return book.getDescription();
             }
         }
-        return "ERROR";
+        return Constants.ERROR;
     }
 
     @Override
     public boolean addRecord(IBook book) throws Exception {
         return super.addRecord(book);
     }
-
 }

@@ -1,12 +1,10 @@
 package model;
 
-import java.io.Serializable;
 import java.util.Date;
 import api.annotations.Columns;
 import api.model.IOrder;
 
-public class Order implements IOrder, Serializable {
-
+public class Order implements IOrder {
     @Columns(name = "order_id")
     private Integer id;
     @Columns(name = "date")
@@ -17,7 +15,7 @@ public class Order implements IOrder, Serializable {
     private String status;
     
     public Order() {
-        
+      //used by dao
     }
 
     @Override

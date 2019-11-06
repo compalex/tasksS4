@@ -5,8 +5,6 @@ import api.annotations.Columns;
 import api.model.IBook;
 
 public class Book implements IBook {
-    
-    
     @Columns(name = "book_id")
     private Integer id;
     @Columns(name = "title")
@@ -18,9 +16,8 @@ public class Book implements IBook {
     @Columns(name = "description")
     private String description;
     
-    //used by dao
-    public Book() {
-        
+    public Book() {  
+      //used by dao
     }
     
     @Override
@@ -47,5 +44,4 @@ public class Book implements IBook {
     public String getDescription() {
         return description;
     }
-    
 }

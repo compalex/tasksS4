@@ -20,15 +20,12 @@ public class BookDAO extends ModelDAO implements IBookDAO {
     @Override
     public List<IBook> getAllBooks() throws Exception {
         BookSort sort = BookSort.BY_PRICE;
-        
-        Statement statement = null;
-        ResultSet resultSet = null;
         Class<Book> classType = Book.class;
         String sql = SQLs.getAllBooksSQL(sort);
-        statement = connection.createStatement(
+        Statement statement = connection.createStatement(
                 ResultSet.TYPE_SCROLL_INSENSITIVE, 
                 ResultSet.CONCUR_READ_ONLY);
-        resultSet = statement.executeQuery(sql);
+        ResultSet resultSet = statement.executeQuery(sql);
         List<IBook> list = Converter.getListFromResultSet(classType, resultSet);
         return list;
     }

@@ -7,32 +7,33 @@ import java.util.List;
 import java.util.Map;
 import api.annotations.Inject;
 import api.dao.IBookDAO;
-import api.dao.IRequestDAO;
-import api.dao.IStockDAO;
 import api.model.IBook;
 import api.model.IBookInStock;
 import api.model.IBookRequest;
 import api.service.IBookService;
-import dao.DAOFactory;
-import model.BookInStock;
+import api.service.IRequestService;
+import api.service.IStockService;
+import facade.LibraryFacade;
 import utility.Constants.BookSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
-import utility.Constants;
+import utility.Constants.TypeDAO;
+import utility.ConfigHandler;
 import utility.Converter;
 
 public class BookService implements IBookService {
-    @Inject(daoType = "bookDAO") 
+    @Inject(daoType = TypeDAO.BOOK_DAO) 
     private IBookDAO bookDAO;
+    private ConfigHandler.Configs configs;
 
-    public BookService() throws Exception {
-
+    public BookService(ConfigHandler.Configs configs) throws Exception {
+        this.configs = configs;
     }
 
     @Override
     public Map<IBook, Integer> getAllBooks(BookSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        StockService stockService = new StockService();
+        IStockService stockService = LibraryFacade.getInstance().stockService;
         List<IBookInStock> booksInStock = stockService.getStock();
         return getBookStockMap(allBooks, booksInStock);
     }
@@ -40,7 +41,7 @@ public class BookService implements IBookService {
     @Override
     public Map<IBook, Integer> getRequests(RequestSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        RequestService requestService = new RequestService();
+        IRequestService requestService = LibraryFacade.getInstance().requestService;
         List<IBookRequest> requests = requestService.getAllRequests();
         return getBookRequestMap(allBooks, requests);
     }
@@ -48,7 +49,7 @@ public class BookService implements IBookService {
     @Override
     public Map<IBook, List<Date>> getStaleBooks(StaleBookSort sort) throws Exception {
         List<IBook> allBooks = bookDAO.getAllBooks();
-        StockService stockService = new StockService();
+        IStockService stockService = LibraryFacade.getInstance().stockService;
         List<IBookInStock> booksInStock = stockService.getStock();
         return getStaleBooksMap(allBooks, booksInStock);
     }
@@ -93,7 +94,7 @@ public class BookService implements IBookService {
     }
 
     private Map<IBook, List<Date>> getStaleBooksMap(List<IBook> books, List<IBookInStock> booksInStock) {
-        booksInStock = Converter.getStaleBooks(booksInStock);
+        booksInStock = Converter.getStaleBooks(booksInStock, configs.unsoldMonth);
         Map<IBook, List<Date>> map = new HashMap<>();
         
         for(IBook book : books) {
@@ -107,7 +108,5 @@ public class BookService implements IBookService {
             }
         }
         return map;
-    }
-    
-    
+    } 
 }

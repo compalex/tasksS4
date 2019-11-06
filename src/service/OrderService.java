@@ -5,23 +5,22 @@ import api.annotations.Inject;
 import api.dao.IOrderDAO;
 import api.model.IOrder;
 import api.service.IOrderService;
+import utility.ConfigHandler;
 import utility.Constants.OrderSort;
+import utility.Constants.TypeDAO;
 
 public class OrderService implements IOrderService {
-    @Inject(daoType = "orderDAO")
+    @Inject(daoType = TypeDAO.ORDER_DAO)
     private IOrderDAO orderDAO;
+    private ConfigHandler.Configs configs;
 
-    public OrderService() throws Exception {
-
+    public OrderService(ConfigHandler.Configs configs) throws Exception {
+        this.configs = configs;
     }
     
     @Override
     public List<IOrder> getAllOrders(OrderSort sort) throws Exception {
         return orderDAO.getAllOrders();
-    }
-    
-    public void addOrder(double price) {
-
     }
 
     @Override

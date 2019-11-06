@@ -1,55 +1,50 @@
 package facade;
 
-import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
-import config.InjectionHandler;
 import api.model.IBookRequest;
-import dao.DAOFactory;
 import service.BookService;
 import service.OrderService;
 import service.RequestService;
 import service.StockService;
-import utility.Constants;
+import utility.ConfigHandler;
+import utility.InjectionHandler;
 import utility.Constants.BookSort;
-import utility.Constants.Database;
 import utility.Constants.OrderSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
-import static utility.Converter.initConfig;
 
 public class LibraryFacade implements ILibraryFacade {
-    private static volatile ILibraryFacade instance = new LibraryFacade();
-    private BookService bookService;
-    private OrderService orderService;
-    private RequestService requestService;
-    private StockService stockService;
+    private static volatile LibraryFacade instance = new LibraryFacade();
+    public BookService bookService;
+    public OrderService orderService;
+    public RequestService requestService;
+    public StockService stockService;
 
     private LibraryFacade() {
         try {
-            initConfig();
-            initService(); 
-            stockService = new StockService();
+            initServices(); 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public static ILibraryFacade getInstance() {
+    
+    //TODO can't return interface
+    public static LibraryFacade getInstance() {
         return instance;
     }    
     
-    private void initService() throws Exception {
-        bookService = new BookService();
-        orderService = new OrderService();
-        requestService = new RequestService();
-        stockService = new StockService();
-        InjectionHandler.doInjection(bookService, orderService, requestService, stockService);
+    private void initServices() throws Exception {
+        ConfigHandler.Configs configs = new ConfigHandler().getConfigs();
+        bookService = new BookService(configs);
+        orderService = new OrderService(configs);
+        requestService = new RequestService(configs);
+        stockService = new StockService(configs);
+        InjectionHandler.doInjection(bookService, orderService, requestService, stockService, configs.database);
     }    
     
     @Override

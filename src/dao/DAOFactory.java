@@ -4,14 +4,12 @@ import api.dao.IBookDAO;
 import api.dao.IOrderDAO;
 import api.dao.IRequestDAO;
 import api.dao.IStockDAO;
-import config.JDBCInstaller;
 import utility.Constants;
+import utility.JDBCInstaller;
 import utility.Constants.Database;
 
 public class DAOFactory {
-    public static Database database;
-    
-    public static IBookDAO getBookDAO() throws Exception {
+    public static IBookDAO getBookDAO(Database database) throws Exception {
         switch(database) {
             case MY_SQL:
                 return new dao.sql.BookDAO(JDBCInstaller.getInstance().getConnection());
@@ -24,7 +22,7 @@ public class DAOFactory {
         }
     }
     
-    public static IOrderDAO getOrderDAO() throws Exception {
+    public static IOrderDAO getOrderDAO(Database database) throws Exception {
         switch(database) {
             case MY_SQL:
                 return new dao.sql.OrderDAO(JDBCInstaller.getInstance().getConnection());
@@ -37,7 +35,7 @@ public class DAOFactory {
         }
     }
     
-    public static IRequestDAO getRequestDAO() throws Exception {
+    public static IRequestDAO getRequestDAO(Database database) throws Exception {
         switch(database) {
             case MY_SQL:
                 return new dao.sql.RequestDAO(JDBCInstaller.getInstance().getConnection());
@@ -50,7 +48,7 @@ public class DAOFactory {
         }
     }
     
-    public static IStockDAO getStockDAO() throws Exception {
+    public static IStockDAO getStockDAO(Database database) throws Exception {
         switch(database) {
             case MY_SQL:
                 return new dao.sql.StockDAO(JDBCInstaller.getInstance().getConnection());

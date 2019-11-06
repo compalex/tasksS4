@@ -3,9 +3,7 @@ package dao.ser;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
-
 import api.dao.IModelDAO;
-import api.model.IBookInStock;
 import api.model.IModel;
 
 public class ModelDAO implements IModelDAO {
@@ -45,5 +43,4 @@ public class ModelDAO implements IModelDAO {
         // TODO Auto-generated method stub
         return false;
     }
-
 }

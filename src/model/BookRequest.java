@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serializable;
 import api.annotations.Columns;
 import api.model.IBookRequest;
 
@@ -9,6 +8,10 @@ public class BookRequest implements IBookRequest {
     private Integer requestId;
     @Columns(name = "book_id")
     private Integer bookId;
+    
+    public BookRequest() {
+      //used by dao
+    }
     
     @Override
     public int getRequestId() {

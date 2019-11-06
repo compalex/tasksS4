@@ -23,5 +23,4 @@ public class StockDAO extends ModelDAO implements IStockDAO {
     public boolean addRecord(IBookInStock book) throws Exception {
         return false;
     }
-
 }

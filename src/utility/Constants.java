@@ -1,11 +1,9 @@
 package utility;
 
 public class Constants {
-    //TODO 
     public static final String PROPERTY_DATABASE = "DATABASE";
     public static final String PROPERTY_UNSOLD_MONTH = "UNSOLD_MONTH";
-    public static final String PROPERTY_AUTOFILL = "AUTO_COMPLETE_REQUEST";
-    
+    public static final String PROPERTY_AUTOFILL = "AUTO_COMPLETE_REQUEST";   
     public static final String PATH_BOOK_SER = "src/db/ser/books.ser";
     public static final String PATH_BOOK_CSV = "src/db/csv/books.csv";
     public static final String PATH_ORDER_SER = "src/db/ser/orders.ser";
@@ -14,10 +12,7 @@ public class Constants {
     public static final String PATH_REQUEST_CSV = "src/db/csv/bookRequests.csv";
     public static final String PATH_STOCK_SER = "src/db/ser/stock.ser";
     public static final String PATH_STOCK_CSV = "src/db/csv/stock.csv";
-    
-    public static int unsoldMonth;
-    public static boolean autoRequest;
-
+    public static final String ERROR = "ERROR";
     
     public enum BookSort {
         BY_TITLE,
@@ -46,5 +41,12 @@ public class Constants {
         MY_SQL,
         SERIAL,
         CSV_FILES
+    }
+    
+    public enum TypeDAO {
+        BOOK_DAO,
+        ORDER_DAO,
+        REQUEST_DAO,
+        STOCK_DAO
     }
 }
