@@ -23,12 +23,16 @@ import utility.Constants;
 import utility.Converter;
 
 public class BookService implements IBookService {
-    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.BOOK_DAO) 
-    private IBookDAO bookDAO;
-    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.STOCK_DAO) 
-    private IStockDAO stockDAO;
     private static IBookService instance;
-
+    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.BOOK) 
+    private IBookDAO bookDAO;
+    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.STOCK) 
+    private IStockDAO stockDAO;
+    
+    private BookService() {
+        //just to forbid regular initializing
+    }
+    
     public static IBookService getInstance() {
         if(instance == null) {
             instance = new BookService();
@@ -110,7 +114,7 @@ public class BookService implements IBookService {
         return map;
     }
 
-    private Map<IBook, List<Date>> getStaleBooksMap(List<IBook> books, List<IBookInStock> booksInStock) {
+    private Map<IBook, List<Date>> getStaleBooksMap(List<IBook> books, List<IBookInStock> booksInStock) throws Exception {
         booksInStock = Converter.getStaleBooks(booksInStock, 
                 ConfigHandler.getInstance().getConfigs().unsoldMonth);
         Map<IBook, List<Date>> map = new HashMap<>();

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
@@ -12,11 +13,17 @@ import utility.Constants.BookSort;
 import utility.Constants.OrderSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
+import utility.InjectionHandler;
 
 public class Demo {
     private static ILibraryFacade facade;
     
     public static void main(String args[]) {
+        try {
+            InjectionHandler.doInjection();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         facade = LibraryFacade.getInstance();   
         try {
             showBooks(BookSort.BY_TITLE);
@@ -43,7 +50,7 @@ public class Demo {
 
     private static void showBooks(BookSort sort) throws Exception {   
         Map<IBook, Integer> books = facade.getAllBooks(sort);
-        
+
         for(IBook book : books.keySet()) {
             System.out.println("____________");
             System.out.println(book.getId() + ". " + book.getTitle());

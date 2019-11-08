@@ -9,10 +9,14 @@ import api.service.IRequestService;
 import utility.Constants;
 
 public class RequestService implements IRequestService {
-    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.REQUEST_DAO) 
+    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.REQUEST) 
     private IRequestDAO requestDAO;
     private static IRequestService instance;
 
+    private RequestService() {
+        //just to forbid regular initializing
+    }
+    
     public static IRequestService getInstance() {
         if(instance == null) {
             instance = new RequestService();

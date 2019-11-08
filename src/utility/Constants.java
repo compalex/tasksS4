@@ -47,11 +47,11 @@ public class Constants {
     }
     
     public enum Type {
-        BOOK_DAO,
-        ORDER_DAO,
-        REQUEST_DAO,
-        STOCK_DAO,
-        OTHER
+        BOOK,
+        ORDER,
+        REQUEST,
+        STOCK,
+        UNDEFINED
     }
     
     public enum Layer {

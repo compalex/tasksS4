@@ -1,67 +1,77 @@
 package utility;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.reflections.Reflections;
 import org.reflections.scanners.FieldAnnotationsScanner;
 import org.reflections.util.ConfigurationBuilder;
 import api.annotations.Inject;
 import dao.DAOFactory;
-import facade.LibraryFacade;
-import service.BookService;
-import service.OrderService;
-import service.RequestService;
-import service.StockService;
+import service.ServiceFactory;
 import utility.Constants;
 import org.reflections.util.ClasspathHelper;
 
 public class InjectionHandler {  
-    //TODO  1)parameter facade to avoid loop (can't take facade.getInstance() 'cuz it's not ready yet)
-    //      2)The couldn't be interfaces because of static getInstance()
-    public static void doInjection(LibraryFacade facade) throws Exception {
+    private static Logger logger = LogManager.getLogger(InjectionHandler.class);
+    
+    public static void doInjection() throws Exception {
         Set<Field> fields = getAnnotatedFields();
 
         for(Field field : fields) {
             field.setAccessible(true);
+            Object toInject = null;
             
             switch(field.getAnnotation(Inject.class).layer()) {
                 case DAO:
-                    injectDAO(field);
+                    toInject = getInjectDAO(field);
                     break;
                 case SERVICE:
-                    injectDynamically(field, facade);
+                    toInject = getInjectService(field);
                     break;
                 default:
                     break;
             }
+            Object declaringObj = field.getDeclaringClass().getMethod(Constants.GET_INSTANCE_METHOD).invoke(null);
+            field.set(declaringObj, toInject);
         }
     }
 
-    private static void injectDAO(Field field) throws Exception {
-        System.out.println(field.getDeclaringClass());
-        Object declaringObj = field.getDeclaringClass().getMethod(Constants.GET_INSTANCE_METHOD).invoke(null);
+    private static Object getInjectDAO(Field field) {
+        try {
+            switch(field.getAnnotation(Inject.class).type()) {
+                case BOOK:
+                    return DAOFactory.getBookDAO();
+                case ORDER:
+                    return DAOFactory.getOrderDAO();
+                case REQUEST:
+                    return DAOFactory.getRequestDAO();
+                case STOCK:
+                    return DAOFactory.getStockDAO();
+                default:
+                    return null;
+            }
+        } catch (Exception e) {
+            logger.info(e);
+        }
+        return null;
+    }
+
+    private static Object getInjectService(Field field) throws Exception {
         switch(field.getAnnotation(Inject.class).type()) {
-            case BOOK_DAO:
-                field.set(declaringObj, DAOFactory.getBookDAO());
-                break;
-            case ORDER_DAO:
-                field.set(declaringObj,  DAOFactory.getOrderDAO());
-                break;
-            case REQUEST_DAO:
-                field.set(declaringObj, DAOFactory.getRequestDAO());
-                break;
-            case STOCK_DAO:
-                field.set(declaringObj,  DAOFactory.getStockDAO());
-                break;
+            case BOOK:
+                return ServiceFactory.getBookService();
+            case ORDER:
+                return ServiceFactory.getOrderService();
+            case REQUEST:
+                return ServiceFactory.getRequestService();
+            case STOCK:
+                return ServiceFactory.getStockService();
             default:
-                break;
+                return null;
         }
-    }
-
-    private static void injectDynamically(Field field, LibraryFacade facade) throws Exception {
-        Method method = field.getType().getMethod(Constants.GET_INSTANCE_METHOD);  
-        field.set(facade, method.invoke(null));
     }
     
     private static Set<Field> getAnnotatedFields() {

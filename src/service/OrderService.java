@@ -9,10 +9,14 @@ import utility.Constants;
 import utility.Constants.OrderSort;
 
 public class OrderService implements IOrderService {
-    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.ORDER_DAO) 
+    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.ORDER) 
     private IOrderDAO orderDAO;
     private static IOrderService instance;
 
+    private OrderService() {
+        //just to forbid regular initializing
+    }
+    
     public static IOrderService getInstance() {
         if(instance == null) {
             instance = new OrderService();

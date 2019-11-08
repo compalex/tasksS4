@@ -8,10 +8,14 @@ import api.service.IStockService;
 import utility.Constants;
 
 public class StockService implements IStockService {
-    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.STOCK_DAO) 
+    @Inject(layer = Constants.Layer.DAO, type = Constants.Type.STOCK) 
     private IStockDAO stockDAO;
     private static IStockService instance;
 
+    private StockService() {
+        //just to forbid regular initializing
+    }
+    
     public static IStockService getInstance() {
         if(instance == null) {
             instance = new StockService();

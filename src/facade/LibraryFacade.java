@@ -3,44 +3,31 @@ package facade;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
 import api.annotations.Inject;
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IBookRequest;
 import api.model.IOrder;
-import service.BookService;
-import service.OrderService;
-import service.RequestService;
-import service.StockService;
-import utility.ConfigHandler;
+import api.service.IBookService;
+import api.service.IOrderService;
+import api.service.IRequestService;
+import api.service.IStockService;
 import utility.Constants;
 import utility.Constants.BookSort;
 import utility.Constants.OrderSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
-import utility.InjectionHandler;
 
 public class LibraryFacade implements ILibraryFacade {
     private static ILibraryFacade instance;
-    //TODO It'd be pretty cool to overload @ to avoid "type" here
-    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.OTHER)
-    private BookService bookService;
-    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.OTHER)
-    private OrderService orderService;
-    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.OTHER)
-    private RequestService requestService;
-    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.OTHER)
-    private StockService stockService;
-
-    private LibraryFacade() {
-        try {
-            ConfigHandler.getInstance().initConfigs();
-            InjectionHandler.doInjection(this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.BOOK)
+    private IBookService bookService;
+    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.ORDER)
+    private IOrderService orderService;
+    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.REQUEST)
+    private IRequestService requestService;
+    @Inject(layer = Constants.Layer.SERVICE, type = Constants.Type.STOCK)
+    private IStockService stockService;
     
     public static ILibraryFacade getInstance() {
         if(instance == null) {

@@ -10,7 +10,5 @@ import utility.Constants;
 @Target(ElementType.FIELD)
 public @interface Inject {
     public Constants.Layer layer();
-    public Constants.Type type();
-    //TODO rename layer, type
-    //TODO make generic using 2nd parameter
+    public Constants.Type type() default Constants.Type.UNDEFINED;
 }
