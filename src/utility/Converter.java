@@ -3,6 +3,7 @@ package utility;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -14,10 +15,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import api.annotations.Columns;
 import api.model.IBookInStock;
+import di.InjectionHandler;
 
 public class Converter {
+    private static Logger logger = LogManager.getLogger(InjectionHandler.class);
+    
     public static <T> List<T> getListFromResultSet(Class classType, ResultSet resultSet)
             throws Exception {
         Field[] fields = classType.getDeclaredFields();
@@ -54,11 +60,13 @@ public class Converter {
         return models;
     }
     
-    public static <T> List<T> getListFromObjStream(Class classType, ObjectInputStream input) 
-            throws Exception {
+    public static <T> List<T> getListFromObjStream(Class classType, ObjectInputStream input) {
         List<T> models = new ArrayList<>();
-        models = (List<T>)input.readObject();
-            
+        try {
+            models = (List<T>)input.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            logger.error(e);
+        }  
         return models;
     }
     

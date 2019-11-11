@@ -4,25 +4,27 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import api.facade.ILibraryFacade;
 import api.model.IBook;
 import api.model.IOrder;
+import di.InjectionHandler;
 import facade.LibraryFacade;
 import utility.Constants.BookSort;
 import utility.Constants.OrderSort;
 import utility.Constants.RequestSort;
 import utility.Constants.StaleBookSort;
-import utility.InjectionHandler;
 
 public class Demo {
+    private static Logger logger = LogManager.getLogger(InjectionHandler.class);
     private static ILibraryFacade facade;
     
-    public static void main(String args[]) {
+    public static void main(String args[]) {       
         try {
             InjectionHandler.doInjection();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e);
         }
         facade = LibraryFacade.getInstance();   
         try {

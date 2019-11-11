@@ -1,0 +1,8 @@
+[TRACE] 2019-11-10 19:55:05.094 [main] InjectionHandler - here
+[TRACE] 2019-11-10 19:55:05.216 [main] InjectionHandler - inside di
+[TRACE] 2019-11-10 19:55:05.228 [main] InjectionHandler - inside di
+[TRACE] 2019-11-10 19:55:05.230 [main] InjectionHandler - inside di
+[TRACE] 2019-11-10 19:55:05.230 [main] InjectionHandler - inside di
+[TRACE] 2019-11-10 19:55:05.231 [main] InjectionHandler - inside di
+[ERROR] 2019-11-10 19:55:47.277 [main] InjectionHandler - error di
+[ERROR] 2019-11-10 20:01:26.957 [main] InjectionHandler - error di

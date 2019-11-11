@@ -4,10 +4,14 @@ import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import di.InjectionHandler;
 
 public class JDBCInstaller {
     private static JDBCInstaller instance;
     private static Connection connection;
+    private static Logger logger = LogManager.getLogger(InjectionHandler.class);
     
     private JDBCInstaller() throws Exception{
         Properties props = new Properties();
@@ -24,7 +28,7 @@ public class JDBCInstaller {
             try {
                 instance = new JDBCInstaller();
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e);
             }
         }
         return instance;
